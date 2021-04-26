@@ -1,15 +1,33 @@
 <template>
-  <h1>Todo List</h1>
+  <div>
+    <h1>Todo List</h1>
+    <form v-on:submit.prevent="onSubmitForm">
+      <input v-model="value" type="text" placeholder="할일을 입력해주세요.">
+    </form>
+    <TodoList :todoList="todoList" />
+  </div>
 </template>
 
+
 <script>
+import TodoList from '../components/TodoList.vue';
+
 export default {
     name: 'Main',
+    components: {
+      TodoList,
+    },
     data() {
-        return
+        return {
+          todoList: [],
+          value: '',
+        }
     },
     methods: {
-
+      onSubmitForm() {
+        this.todoList.push(this.value);
+        this.value = '';
+      }
     }
 }
 </script>
