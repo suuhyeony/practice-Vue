@@ -4,7 +4,7 @@
     <form v-on:submit.prevent="onSubmitForm">
       <input v-model="value" type="text" placeholder="할일을 입력해주세요.">
     </form>
-    <TodoList :todoList="todoList" />
+    <TodoList @remove="removeItem" :todoList="todoList" />
   </div>
 </template>
 
@@ -27,7 +27,10 @@ export default {
       onSubmitForm() {
         this.todoList.push(this.value);
         this.value = '';
-      }
+      },
+      removeItem(idx) {
+        this.todoList.splice(idx, 1);
+      },
     }
 }
 </script>
