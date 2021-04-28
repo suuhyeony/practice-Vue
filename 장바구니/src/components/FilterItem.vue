@@ -1,10 +1,10 @@
 <template>
     <div class="filter-item">
         <select name="" id="">
-            <option value="">인기순</option>
-            <option value="">낮은 가격순</option>
-            <option value="">높은 가격순</option>
-            <option value="">쿠폰 적용가능</option>
+            <option value="score">인기순</option>
+            <option value="low-price">낮은 가격순</option>
+            <option value="high-price">높은 가격순</option>
+            <option value="sale">쿠폰 적용가능</option>
         </select>
     </div>
 </template>
