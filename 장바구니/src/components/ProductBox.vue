@@ -17,13 +17,16 @@
                         <b>{{ productItem.price }}</b>
                     </b-card-text>
                 </div>
-                <b-button href="#" variant="primary" style="display:inline-block; text-decoration:none;">담기</b-button>
+                <b-button v-show="!isInCart" href="#" variant="primary" style="display:inline-block; text-decoration:none;" @click="addItem">담기</b-button>
+                <b-button v-show="isInCart" href="#" variant="primary" style="display:inline-block; text-decoration:none;" @click="delItem">빼기</b-button>
             </div>
         </b-card>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     name: 'ProductBox',
     props: {
@@ -31,11 +34,33 @@ export default {
     },
     data() {
         return {
-
+            isInCart: false,
         }
     },
     methods: {
-
+        addItem() {
+            this.$store.commit('ADD_TO_CART', this.productItem);
+            this.checkItem();
+        },
+        delItem() {
+            this.$store.commit('DEL_FROM_CART', this.productItem);
+            this.checkItem();
+        },
+        checkItem() {
+            if (this.cartList.filter((item) => {
+                if (this.productItem.id === item.id) return true
+                else return false 
+            }).length >= 1) this.isInCart = true
+            else this.isInCart = false
+        }
+    },
+    computed: {
+        ...mapState([
+            'cartList',
+        ])
+    },
+    created() {
+        this.checkItem();
     }
 }
 </script>
