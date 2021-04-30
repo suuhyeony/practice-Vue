@@ -1,20 +1,20 @@
 <template>
     <div class="productBlock">
-        <input type="checkbox" checked v-model="isCheck" @change="controllCheck">
-        <img :src="cartItem.coverImage" alt="">
+        <input class="checkbox" type="checkbox" checked v-model="isCheck">
+        <img :src="cartItem.coverImage" alt="item-img">
         <div class="contentBlock">
+            <p style="margin:0px;">{{ cartItem.title }}</p>
             <div class="cart-content">
                 <p class="coupon" v-if="cartItem.availableCoupon === false" style="border: 1px solid red; marginLeft:3px;">쿠폰사용 불가</p>
                 <p v-else></p>
+                <p style="color:orange; display:flex; justifyContent:flex-end;"><b>{{ cartItem.price }}</b></p>
             </div>
-            <p>{{ cartItem.title }}</p>
-            <p style="color:orange; marginRight:0px;"><b>{{ cartItem.price }}</b></p>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
     name: 'CartItem',
@@ -30,14 +30,20 @@ export default {
         ...mapState([
             'checkList',
             'checkedAll',
+            'cartList',
         ])
     },
-    watch: {
+    watch: {  // 어떤 값이 바뀌었는지 감시
+        // 상위 전체체크 값이 변하면, 하위 체크 값들도 바꾸기
         checkedAll: function() {
             this.isCheck = this.checkedAll;
+        },
+        isCheck: function() {
+            this.controllCheck();
         }
     },
     methods: {
+        // 체크 여부에 따라 체크리스트에 상품 넣고 빼기
         controllCheck() {
             if (this.isCheck) {
                 this.$store.commit('ADD_TO_CHECKLIST', this.cartItem);
@@ -46,9 +52,11 @@ export default {
             }
         }
     },
-    created() {
-        // this.isCheck = true;
+    created() { // created될 때, 체크리스트 생성
         this.controllCheck();
+    },
+    destroyed() {  // destroyed될 때, 체크리스트 비우기
+        this.$store.commit('CLEAR_CHECKLIST');
     }
 }
 </script>
@@ -66,15 +74,25 @@ img {
 }
 .contentBlock {
     padding-left: 15px;
-    /* height: 100px; */
-}
-.addButton {
-    position: relative;
-    right: -290px;
+    width: 350px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .cart-content {
-    width: 150px;
+    height: 30px;
+    margin-top: 8px;
     display: flex;
-    /* justify-content: space-evenly; */
+    justify-content: space-between;
+}
+.coupon {
+    color: red;
+    font-size: 15px;
+    margin: 3px 0px;
+}
+.checkbox {
+    width: 15px;
+    height: 15px;
 }
 </style>

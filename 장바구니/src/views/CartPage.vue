@@ -10,14 +10,18 @@
 </template>
 
 <script>
-import CartContainer from '../components/CartContainer.vue'
-import CartHeader from '../components/CartHeader.vue'
-import CheckOut from '../components/CheckOut.vue'
-import { mapState } from 'vuex'
+import CartContainer from '../components/CartContainer.vue';
+import CartHeader from '../components/CartHeader.vue';
+import CheckOut from '../components/CheckOut.vue';
+import { mapState } from 'vuex';
 
 export default {
     name: 'CartPage',
-    components: { CartHeader, CartContainer, CheckOut },
+    components: { 
+        CartHeader, 
+        CartContainer, 
+        CheckOut 
+    },
     computed: {
         ...mapState([
             'cartList',

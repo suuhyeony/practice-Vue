@@ -5,18 +5,13 @@
 </template>
 
 <script>
-import ProductList from '../components/ProductList'
+import ProductList from '../components/ProductList';
 
 export default {
+    name: 'MainPage',
     components: { 
         ProductList,
     },
-    data() {
-        return {
-            
-        }
-    }
-
 }
 </script>
 

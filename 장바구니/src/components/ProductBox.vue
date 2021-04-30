@@ -1,13 +1,9 @@
 <template>
+    <!-- vue bootstrap 사용 -->
     <div style="boxShadow: 0 0 8px rgba(0, 0, 0, 0.07);">
-        <b-card
-            :title="productItem.title"
-            :img-src="productItem.coverImage"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2 product-item"
+        <b-card class="mb-2 product-item"
+            :title="productItem.title" :img-src="productItem.coverImage"
+            img-alt="Image" img-top tag="article" style="max-width: 20rem;"
         >
             <div class="product-content">
                 <div class="price-tag">
@@ -25,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
     name: 'ProductBox',
@@ -34,8 +30,13 @@ export default {
     },
     data() {
         return {
-            isInCart: false,
+            isInCart: false,    // 담기or빼기 버튼 토글을 위한 데이터 
         }
+    },
+    computed: {
+        ...mapState([
+            'cartList',
+        ])
     },
     methods: {
         addItem() {
@@ -46,18 +47,14 @@ export default {
             this.$store.commit('DEL_FROM_CART', this.productItem);
             this.checkItem();
         },
+        // 해당 상품이 장바구니 담겨있는지 확인
         checkItem() {
             if (this.cartList.filter((item) => {
-                if (this.productItem.id === item.id) return true
-                else return false 
-            }).length >= 1) this.isInCart = true
-            else this.isInCart = false
+                if (this.productItem.id === item.id) return true;
+                else return false;
+            }).length >= 1) this.isInCart = true;
+            else this.isInCart = false;
         }
-    },
-    computed: {
-        ...mapState([
-            'cartList',
-        ])
     },
     created() {
         this.checkItem();

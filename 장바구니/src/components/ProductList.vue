@@ -30,6 +30,7 @@ export default {
         }
     },
     methods: {
+        // 선택된 필터값에 따라 정렬
         arrangeList() {
             if (this.filterValue === 'score') {
                 this.productList = productItems.sort(sortByScore);
@@ -42,7 +43,7 @@ export default {
                     if (!('availableCoupon' in item)) return true;
                 })
             }
-        }
+        },
     },
     created() {
         this.productList = [...productItems.sort(sortByScore)];
@@ -50,7 +51,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .products {
     margin-top: 20px;
     display: grid;
@@ -61,5 +62,14 @@ export default {
     margin-top: 70px;
     display: flex;
     justify-content: flex-end;
+}
+#product-filter {
+    width: 160px;
+    height: 40px;
+    padding: 10px 5px;
+    font-size: 16px;
+}
+option {
+    font-size: 16px;
 }
 </style>
